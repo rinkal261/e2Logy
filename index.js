@@ -20,6 +20,23 @@ const users = [
 app.get('/data', (req, res) => {
     res.json({ message: 'Data fetched successfully' });
   });
+
+  const users1 = [
+    { username: 'admin', password: 'password123' }
+    ];
+    
+    app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    const user = users1.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+    res.json({ message: 'Login successful' });
+    } else {
+    res.status(400).json({ message: 'Invalid credentials' });
+    }
+    });
+    
+
 app.get("/users", (req, res) => {
   const user = users.find((u) => u.id === parseInt(req.query.id));
   if (!user) {
