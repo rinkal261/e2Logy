@@ -2,12 +2,14 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import cors from "cors";
 import fileUploadRoutes from "./src/router/fileUpload.js";
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use("/upload", fileUploadRoutes);
 
 const users = [
@@ -15,6 +17,9 @@ const users = [
   { id: 2, name: "Jane Smith" },
 ];
 
+app.get('/data', (req, res) => {
+    res.json({ message: 'Data fetched successfully' });
+  });
 app.get("/users", (req, res) => {
   const user = users.find((u) => u.id === parseInt(req.query.id));
   if (!user) {
